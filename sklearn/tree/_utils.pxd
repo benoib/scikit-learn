@@ -156,4 +156,26 @@ cdef class WeightedMedianCalculator:
     cdef int update_median_parameters_post_remove(self, DOUBLE_t data,
                                                   DOUBLE_t weight,
                                                   DOUBLE_t original_median) nogil
-    cdef DOUBLE_t get_median(self) nogil
+    cdef DOUBLE_t get_median(self) 
+
+
+cdef class WeightedQuantileCalculator:
+    cdef SIZE_t initial_capacity
+    cdef WeightedPQueue samples
+    cdef DOUBLE_t total_weight
+    cdef SIZE_t k
+    cdef DOUBLE_t sum_w_0_k            # represents sum(weights[0:k])
+                                       # = w[0] + w[1] + ... + w[k-1]
+
+    cdef SIZE_t size(self) nogil
+    cdef int push(self, DOUBLE_t data, DOUBLE_t weight) nogil
+    cdef void reset(self) nogil
+    cdef int update_median_parameters_post_push(self, DOUBLE_t data,
+                                                DOUBLE_t weight,
+                                                DOUBLE_t original_median) nogil
+    cdef int remove(self, DOUBLE_t data, DOUBLE_t weight) nogil
+    cdef int pop(self, DOUBLE_t* data, DOUBLE_t* weight) nogil
+    cdef int update_median_parameters_post_remove(self, DOUBLE_t data,
+                                                  DOUBLE_t weight,
+                                                  DOUBLE_t original_median) nogil
+    cdef DOUBLE_t get_median(self) nogil    
